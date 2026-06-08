@@ -1,0 +1,12 @@
+# Eclipse
+.settings/
+.metadata/
+
+# Build output
+build/
+
+# Java compiled files
+*.class
+
+# Logs
+*.log
