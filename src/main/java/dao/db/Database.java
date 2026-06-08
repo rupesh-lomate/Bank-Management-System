@@ -15,7 +15,7 @@ public class Database {
    static {
 	   Properties properties = new Properties();
 	   try {
-		properties.load( new FileInputStream("H:/College/Project/Projects/BankProject/src/main/resources/db.properties"));
+		properties.load(Database.class.getClassLoader().getResourceAsStream("db.properties"));
 		url = properties.getProperty("db.url");
 		user = properties.getProperty("db.user");
 		pwd = properties.getProperty("db.pwd");

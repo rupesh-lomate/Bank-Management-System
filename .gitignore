@@ -2,6 +2,10 @@
 .settings/
 .metadata/
 
+# intellij idea
+.idea/
+.smarttomcat/
+
 # Build output
 build/
 target/
