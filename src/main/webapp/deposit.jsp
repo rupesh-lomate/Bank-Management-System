@@ -162,7 +162,7 @@
         }
     %>
     <header>
-        SBI Bank Employee Portal
+        Swarajya Bank Employee Portal
     </header>
 
     <div class="container">
@@ -210,7 +210,7 @@
     </div>
 
     <footer>
-        &copy; 2025 SBI Bank. All rights reserved.
+        &copy; 2025 Swarajya Bank. All rights reserved.
     </footer>
 </body>
 </html>
