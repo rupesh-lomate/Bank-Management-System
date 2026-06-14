@@ -1,4 +1,4 @@
-package service.mail;
+package services.mail;
 
 import java.security.SecureRandom;
 import java.util.concurrent.ConcurrentHashMap;

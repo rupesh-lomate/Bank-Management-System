@@ -1,4 +1,4 @@
-package service.mail;
+package services.mail;
 
 public final class OTPUtil {
 

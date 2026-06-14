@@ -5,8 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.mail.OTPManager;
-import service.mail.OTPUtil;
+import services.mail.OTPManager;
+import services.mail.OTPUtil;
 import services.customer.CustomerServices;
 
 import java.io.IOException;

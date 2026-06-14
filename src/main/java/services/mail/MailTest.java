@@ -1,4 +1,4 @@
-package service.mail;
+package services.mail;
 
 public class MailTest {
     public static void main(String[] args) {
