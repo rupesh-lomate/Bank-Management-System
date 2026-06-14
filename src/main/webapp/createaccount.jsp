@@ -149,6 +149,14 @@
                    pattern="[0-9]{10}" title="Phone number must be 10 digits" required>
         </div>
 
+        <!-- Mail -->                                          <%-- ADDED --%>
+        <div class="form-group">
+            <label for="mail">Email Address</label>
+            <input type="email" id="mail" name="mail"
+                   value='<%= request.getAttribute("mail") != null ? request.getAttribute("mail") : "" %>'
+                   placeholder="Enter Email Address" required>
+        </div>
+
         <!-- IFSC Code -->
         <div class="form-group">
             <label for="ifsc-code">IFSC Code</label>

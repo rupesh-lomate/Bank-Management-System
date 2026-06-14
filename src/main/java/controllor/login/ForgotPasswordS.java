@@ -1,62 +1,167 @@
 package controllor.login;
 
+import dao.customer.CustomerDao;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import service.mail.OTPManager;
+import service.mail.OTPUtil;
 import services.customer.CustomerServices;
 
 import java.io.IOException;
-import java.util.Random;
-
 
 public class ForgotPasswordS extends HttpServlet {
-    
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String otp = request.getParameter("otp");
-        System.out.println("otp "+otp);
-        if(otp == null) {
-            if(CustomerServices.containUsername(username)) {
-        	    request.setAttribute("username", username);
-        	    request.setAttribute("generatedOTP", generateOTP());
-            }else {
-        	    request.setAttribute("errorMessage", "Invalid username");
+    @Override
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+
+        String action =
+                request.getParameter("action");
+
+        String username =
+                request.getParameter("username");
+
+        if ("sendOtp".equals(action)) {
+
+            if (username == null || username.isBlank()) {
+
+                request.setAttribute(
+                        "errorMessage",
+                        "Username is required."
+                );
+
+                request.getRequestDispatcher(
+                        "forgotpassword.jsp"
+                ).forward(request, response);
+
+                return;
             }
-            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
-        }else {
-        	  if(CustomerServices.containUsername(username)) {
-        		  request.setAttribute("username", username);
-           	      int generatedOTP = Integer.parseInt((String) request.getParameter("generatedOTP"));
-           	      int enterOTP = Integer.parseInt(otp);
-           	      System.out.println(generatedOTP+" "+enterOTP);
-           	      if(generatedOTP == enterOTP) {
-           	    	    System.out.println(username);
-           	    	    request.getRequestDispatcher("setnewpassword.jsp").forward(request, response);
-           	      }else {
-           	    	  request.setAttribute("errorMessageOTP", "wrong otp enter");
-           	    	  request.setAttribute("generatedOTP", generatedOTP);
-           	    	  request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
-           	      }
-           	      
-              }else {
-           	      request.setAttribute("errorMessage", "Invalid username");
-           	      request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
-              }
+
+            if (!CustomerServices.containUsername(username)) {
+
+                request.setAttribute(
+                        "errorMessage",
+                        "Invalid Username."
+                );
+
+                request.getRequestDispatcher(
+                        "forgotpassword.jsp"
+                ).forward(request, response);
+
+                return;
+            }
+
+            String email =
+                    CustomerDao.getMailByUsername(username);
+
+            if (email == null || email.isBlank()) {
+
+                request.setAttribute(
+                        "errorMessage",
+                        "No email registered with this account. Please contact your branch."
+                );
+
+                request.getRequestDispatcher(
+                        "forgotpassword.jsp"
+                ).forward(request, response);
+
+                return;
+            }
+
+            String otp =
+                    OTPManager.generateOtp();
+
+            OTPManager.saveOtp(
+                    username,
+                    otp
+            );
+
+            OTPUtil.sendOTP(
+                    email,
+                    otp
+            );
+
+            request.setAttribute(
+                    "username",
+                    username
+            );
+
+            request.setAttribute(
+                    "otpSent",
+                    true
+            );
+
+            request.getRequestDispatcher(
+                    "forgotpassword.jsp"
+            ).forward(request, response);
+
+            return;
         }
-     }
 
+        if ("verifyOtp".equals(action)) {
 
-    // Method to generate OTP
-    private String generateOTP() {
-        Random rand = new Random();
-        return String.format("%06d", rand.nextInt(1000000)); // Generate 6-digit OTP
+            String enteredOtp =
+                    request.getParameter("otp");
+
+            request.setAttribute(
+                    "username",
+                    username
+            );
+
+            request.setAttribute(
+                    "otpSent",
+                    true
+            );
+
+            if (enteredOtp == null
+                    || enteredOtp.isBlank()) {
+
+                request.setAttribute(
+                        "errorMessageOTP",
+                        "Please enter OTP."
+                );
+
+                request.getRequestDispatcher(
+                        "forgotpassword.jsp"
+                ).forward(request, response);
+
+                return;
+            }
+
+            boolean verified =
+                    OTPManager.verifyOtp(
+                            username,
+                            enteredOtp
+                    );
+
+            if (!verified) {
+
+                request.setAttribute(
+                        "errorMessageOTP",
+                        "Invalid OTP. Please try again."
+                );
+
+                request.getRequestDispatcher(
+                        "forgotpassword.jsp"
+                ).forward(request, response);
+
+                return;
+            }
+
+            request.setAttribute(
+                    "username",
+                    username
+            );
+
+            request.getRequestDispatcher(
+                    "setnewpassword.jsp"
+            ).forward(request, response);
+        }
     }
+
 }

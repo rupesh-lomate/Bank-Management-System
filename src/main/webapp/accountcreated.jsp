@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Created</title>
     <style>
-        /* General Styles */
         body {
             font-family: 'Poppins', Arial, sans-serif;
             background: linear-gradient(to bottom right, #1e3c72, #2a5298);
@@ -135,7 +134,6 @@
             transform: translateY(-2px);
         }
 
-        /* Responsive Design */
         @media screen and (max-width: 768px) {
             .passbook {
                 width: 90%;
@@ -171,7 +169,7 @@
             response.sendRedirect("login.jsp");
         }
     %>
- 
+
 <%
    long accNo = Long.parseLong(request.getParameter("acc_no"));
    Customer customer = CustomerServices.getCustomer(accNo);
@@ -186,6 +184,7 @@
    String dob = localDate != null ? localDate.format(formatter) : "N/A";
    long adharNo = customer.getAdharNo() != 0 ? customer.getAdharNo() : 0;
    String address = customer.getAddress() != null ? customer.getAddress() : "N/A";
+   String mail = customer.getMail() != null ? customer.getMail() : "N/A";
 %>
 <div class="passbook">
     <div class="header">
@@ -198,6 +197,7 @@
         <p><strong>Branch Name:</strong> <%= branch %></p>
         <p><strong>Balance:</strong> &#8377;<%= bal %></p>
         <p><strong>Phone No:</strong> <%= phoneNo %></p>
+        <p><strong>Email:</strong> <%= mail %></p>
         <p><strong>Date of Birth:</strong> <%= dob %></p>
         <p><strong>Account No:</strong> <%= accNo %></p>
         <p><strong>Aadhar No:</strong> <%= adharNo %></p>

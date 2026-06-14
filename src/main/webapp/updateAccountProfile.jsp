@@ -6,7 +6,6 @@
 <head>
     <title>Update Customer Profile</title>
     <style>
-        /* General Reset */
         * {
             margin: 0;
             padding: 0;
@@ -108,12 +107,10 @@
         }
     %>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             Customer Account Management
         </div>
 
-        <!-- Display success or error messages -->
         <%
             String errorMessage = (String) request.getAttribute("errorMessage");
             String successMessage = (String) request.getAttribute("successMessage");
@@ -128,22 +125,20 @@
             }
         %>
 
-        <!-- Form to Input Account Number -->
         <h2>Find Customer Details</h2>
         <form action="updateAccountProfileS" method="post">
             <label for="accNo">Customer Account Number</label>
-            <input 
-                type="text" 
-                id="accNo" 
-                name="accNo" 
-                value="<%= request.getAttribute("accNo") != null ? request.getAttribute("accNo") : "" %>" 
-                placeholder="Enter account number" 
+            <input
+                type="text"
+                id="accNo"
+                name="accNo"
+                value="<%= request.getAttribute("accNo") != null ? request.getAttribute("accNo") : "" %>"
+                placeholder="Enter account number"
                 required
             >
             <button type="submit">Get Details</button>
         </form>
 
-        <!-- Second Form: Modify Customer Details -->
         <%
             String name = (String) request.getAttribute("name");
             if (name != null) {
@@ -154,42 +149,52 @@
                 <input type="hidden" name="accNo" value="<%= request.getAttribute("accNo") %>">
 
                 <label for="name">Name</label>
-                <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    value="<%= name %>" 
-                    placeholder="Enter name" 
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="<%= name %>"
+                    placeholder="Enter name"
                     required
                 >
 
                 <label for="dob">Date of Birth</label>
-                <input 
-                    type="date" 
-                    id="dob" 
-                    name="dob" 
-                    value="<%= request.getAttribute("dob") %>" 
+                <input
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    value="<%= request.getAttribute("dob") %>"
                     required
                 >
 
                 <label for="phoneNo">Phone Number</label>
-                <input 
-                    type="text" 
-                    id="phoneNo" 
-                    name="phoneNo" 
-                    value="<%= request.getAttribute("phoneNo") %>" 
-                    placeholder="Enter phone number" 
+                <input
+                    type="text"
+                    id="phoneNo"
+                    name="phoneNo"
+                    value="<%= request.getAttribute("phoneNo") %>"
+                    placeholder="Enter phone number"
                     required
                 >
 
                 <label for="address">Address</label>
-                <input 
-                    type="text" 
-                    id="address" 
-                    name="address" 
-                    value="<%= request.getAttribute("address") %>" 
-                    placeholder="Enter address" 
+                <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value="<%= request.getAttribute("address") %>"
+                    placeholder="Enter address"
                     required
+                >
+
+                <!-- ADDED -->
+                <label for="mail">Email Address</label>
+                <input
+                    type="email"
+                    id="mail"
+                    name="mail"
+                    value="<%= request.getAttribute("mail") != null ? request.getAttribute("mail") : "" %>"
+                    placeholder="Enter email address"
                 >
 
                 <button type="submit">Modify Details</button>

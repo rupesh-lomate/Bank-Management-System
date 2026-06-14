@@ -1,7 +1,11 @@
 package dao.entities;
 
+import lombok.ToString;
+
 import java.time.LocalDate;
 
+
+@ToString
 public class Customer {
    private String name;
    private long accNo;
@@ -14,6 +18,7 @@ public class Customer {
    private long phoneNo;
    private String address;
    private String branch;
+   private String mail;
   
    public void setBranch(String branch) {
 	   this.branch = branch;
@@ -105,6 +110,14 @@ public void setAddress(String address) {
 	this.address = address;
 }
 
+    public String  getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
 public Customer name(String name) { this.name = name; return this;}
    public Customer accNo(long accNo) { this.accNo = accNo; return this;}
    
@@ -126,22 +139,10 @@ public Customer name(String name) { this.name = name; return this;}
    public Customer address(String address) { this.address = address; return this;}
    
    public Customer branch(String branch) {this.branch = branch; return this;}
-   
-   public String toString() {
-       return "Customer{" +
-              "name='" + name + '\'' +
-              ", accNo=" + accNo +
-              ", userName='" + userName + '\'' +
-              ", password='" + password + '\'' +
-              ", bal=" + bal +
-              ", dob=" + dob +
-              ", ifsc='" + ifsc + '\'' +
-              ", adharNo=" + adharNo +
-              ", phoneNo=" + phoneNo +
-              ", address='" + address + '\'' +
-              ", branch='" +branch +'\'' +
-              '}';
 
-   }
+   public Customer mail(String mail) {this.mail = mail; return this;}
+
+
+
    }
 

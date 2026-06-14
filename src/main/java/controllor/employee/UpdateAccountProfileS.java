@@ -31,6 +31,8 @@ public class UpdateAccountProfileS extends HttpServlet {
             String dob = request.getParameter("dob");
             String phoneNo = request.getParameter("phoneNo");
             String address = request.getParameter("address");
+            String mail = request.getParameter("mail");
+
 
             if (accNoParam != null) {
                 long accNo = Long.parseLong(accNoParam);
@@ -43,13 +45,14 @@ public class UpdateAccountProfileS extends HttpServlet {
                 }
 
                 // Step 2: If updating customer details
-                if (name != null && dob != null && phoneNo != null && address != null) {
+                if (name != null && dob != null && phoneNo != null && address != null && mail != null) {
                     Customer customer = new Customer();
                     customer.setAccNo(accNo);
                     customer.setName(name);
                     customer.setDob(LocalDate.parse(dob));
                     customer.setPhoneNo(Long.parseLong(phoneNo));
                     customer.setAddress(address);
+                    customer.setMail(mail);
 
                     boolean isUpdated = EmployeeServices.modifyCustomer(customer);
 
@@ -70,6 +73,7 @@ public class UpdateAccountProfileS extends HttpServlet {
                     request.setAttribute("phoneNo", customer.getPhoneNo());
                     request.setAttribute("address", customer.getAddress());
                     request.setAttribute("accNo", accNo);
+                    request.setAttribute("mail", customer.getMail());
                 }
             }
 
